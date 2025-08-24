@@ -50,7 +50,7 @@ const Dashboard = () => {
 
   return (
     <motion.div
-      className="space-y-6 p-3 bg-gray-50 min-h-screen"
+      className="space-y-6 p-2 bg-gray-50 min-h-screen"
       variants={containerVariants}
       initial="hidden"
       animate="visible"

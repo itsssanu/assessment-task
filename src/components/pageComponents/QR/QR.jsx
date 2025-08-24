@@ -133,7 +133,7 @@ const QR = () => {
 
     return (
         <motion.div
-            className="min-h-screen bg-gray-50 p-3"
+            className="min-h-screen bg-gray-50 p-2"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -351,7 +351,6 @@ const QR = () => {
                                             >
                                                 <motion.div
                                                     className="flex items-center gap-4 p-4"
-                                                    whileHover={{ backgroundColor: "#f9fafb" }}
                                                     transition={{ duration: 0.2 }}
                                                 >
                                                     {/* QR Code Thumbnail */}

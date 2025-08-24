@@ -119,14 +119,11 @@ const TransactionCard = ({ txn, index }) => {
 const MobilePagination = ({ page, totalPages, setPage }) => {
   const maxVisible = 3;
   const currentPage = page + 1;
-
   let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
   let endPage = Math.min(totalPages, startPage + maxVisible - 1);
-
   if (endPage - startPage + 1 < maxVisible) {
     startPage = Math.max(1, endPage - maxVisible + 1);
   }
-
   const pages = [];
   if (startPage > 1) {
     pages.push(1);
@@ -134,18 +131,15 @@ const MobilePagination = ({ page, totalPages, setPage }) => {
       pages.push('...');
     }
   }
-
   for (let i = startPage; i <= endPage; i++) {
     pages.push(i);
   }
-
   if (endPage < totalPages) {
     if (endPage < totalPages - 1) {
       pages.push('...');
     }
     pages.push(totalPages);
   }
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -163,7 +157,6 @@ const MobilePagination = ({ page, totalPages, setPage }) => {
         >
           &lt;
         </motion.button>
-
         {pages.map((pageNumber, index) => (
           pageNumber === '...' ? (
             <span key={`dots-${index}`} className="px-2 py-1 text-gray-500">
@@ -185,7 +178,6 @@ const MobilePagination = ({ page, totalPages, setPage }) => {
             </motion.button>
           )
         ))}
-
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -206,14 +198,11 @@ const MobilePagination = ({ page, totalPages, setPage }) => {
 const DesktopPagination = ({ page, totalPages, setPage }) => {
   const maxVisible = 5;
   const currentPage = page + 1;
-
   let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
   let endPage = Math.min(totalPages, startPage + maxVisible - 1);
-
   if (endPage - startPage + 1 < maxVisible) {
     startPage = Math.max(1, endPage - maxVisible + 1);
   }
-
   const pages = [];
   if (startPage > 1) {
     pages.push(1);
@@ -221,18 +210,15 @@ const DesktopPagination = ({ page, totalPages, setPage }) => {
       pages.push('...');
     }
   }
-
   for (let i = startPage; i <= endPage; i++) {
     pages.push(i);
   }
-
   if (endPage < totalPages) {
     if (endPage < totalPages - 1) {
       pages.push('...');
     }
     pages.push(totalPages);
   }
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -306,7 +292,7 @@ const History = () => {
   const [transactions, setTransactions] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [dataLoading, setDataLoading] = useState(true);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
@@ -323,7 +309,7 @@ const History = () => {
 
   useEffect(() => {
     const fetchTransactions = async () => {
-      setLoading(true);
+      setDataLoading(true);
       setError(null);
       try {
         const response = await fetch(`http://localhost:5000/api/transactions?page=${page}`);
@@ -337,7 +323,7 @@ const History = () => {
       } catch (err) {
         setError("Server error: " + err.message);
       }
-      setLoading(false);
+      setDataLoading(false);
     };
     fetchTransactions();
   }, [page]);
@@ -361,41 +347,6 @@ const History = () => {
     setSearchTerm('');
     setFilteredData(transactions);
   };
-
-  if (loading) return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="p-6 text-center text-gray-600"
-    >
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-        className="inline-block w-6 h-6 border-2 border-gray-300 border-t-green-600 rounded-full mr-2"
-      />
-      Loading transactions...
-    </motion.div>
-  );
-
-  if (error) return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className="p-6 text-center text-red-600"
-    >
-      {error}
-    </motion.div>
-  );
-
-  if (transactions.length === 0) return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="p-6 text-center text-gray-600"
-    >
-      No transactions found.
-    </motion.div>
-  );
 
   const dataToRender = filteredData.length > 0 ? filteredData : transactions;
 
@@ -423,11 +374,6 @@ const History = () => {
             Settlement History
           </motion.h1>
           <motion.button
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 px-4 py-2 border border-[#42794A] rounded-lg font-medium text-[#42794A] hover:text-white hover:bg-[#42794A] bg-gray-50 hover:border-[#42794A]"
           >
             <Download size={16} /> Download statement
@@ -453,8 +399,6 @@ const History = () => {
             />
           </div>
           <motion.button
-            whileHover={{ scale: 1.05, rotate: 5 }}
-            whileTap={{ scale: 0.95 }}
             className="p-2 border border-gray-300 rounded-lg bg-green-600 text-white hover:bg-green-700 transition-colors"
           >
             <Filter size={18} />
@@ -494,12 +438,45 @@ const History = () => {
 
         {/* Mobile Cards (hidden on desktop) */}
         <div className="sm:hidden">
-          <AnimatePresence mode="wait">
-            {dataToRender.map((txn, index) => (
-              <TransactionCard key={txn.transaction_id} txn={txn} index={index} />
-            ))}
-          </AnimatePresence>
-          <MobilePagination page={page} totalPages={totalPages} setPage={setPage} />
+          {dataLoading ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="p-6 text-center text-gray-600"
+            >
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                className="inline-block w-6 h-6 border-2 border-gray-300 border-t-green-600 rounded-full mr-2 -mb-2"
+              />
+              Loading transactions...
+            </motion.div>
+          ) : error ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="p-6 text-center text-red-600"
+            >
+              {error}
+            </motion.div>
+          ) : dataToRender.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="p-6 text-center text-gray-600"
+            >
+              No transactions found.
+            </motion.div>
+          ) : (
+            <>
+              <AnimatePresence mode="wait">
+                {dataToRender.map((txn, index) => (
+                  <TransactionCard key={txn.transaction_id} txn={txn} index={index} />
+                ))}
+              </AnimatePresence>
+              <MobilePagination page={page} totalPages={totalPages} setPage={setPage} />
+            </>
+          )}
         </div>
 
         {/* Desktop Table (hidden on mobile) */}
@@ -509,145 +486,173 @@ const History = () => {
           transition={{ duration: 0.5, delay: 0.5 }}
           className="hidden sm:block bg-white rounded-lg border border-gray-200 overflow-hidden"
         >
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <motion.thead
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.6 }}
-                className="bg-gray-100"
-              >
-                <tr>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider">
-                    <div className="flex items-center space-x-2">
-                      <span>Transaction ID</span>
-                    </div>
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider">
-                    <div className="flex items-center space-x-2">
-                      <span>Amount</span>
-                    </div>
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider">
-                    <div className="flex items-center space-x-2">
-                      <span>Wallet</span>
-                    </div>
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider">
-                    <div className="flex items-center space-x-2">
-                      <span>Status</span>
-                    </div>
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider">
-                    <div className="flex items-center space-x-2">
-                      <span>Date & Time</span>
-                    </div>
-                  </th>
-                </tr>
-              </motion.thead>
-              <tbody className="divide-y divide-gray-100">
-                <AnimatePresence mode="wait">
-                  {dataToRender.map((txn, index) => (
-                    <motion.tr
-                      key={txn.transaction_id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 20 }}
-                      transition={{ duration: 0.3, delay: index * 0.05 }}
-                      whileHover={{ backgroundColor: "rgba(249, 250, 251, 1)" }}
-                      className="hover:bg-gray-50 transition-colors"
-                    >
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        <div className="flex items-center space-x-3">
-                          <div className="font-mono text-sm">{txn.transaction_id}</div>
+          {dataLoading ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="p-6 text-center text-gray-600"
+            >
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                className="inline-block w-6 h-6 border-2 border-gray-300 border-t-green-600 rounded-full mr-2 -mb-2"
+              />
+              Loading transactions...
+            </motion.div>
+          ) : error ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="p-6 text-center text-red-600"
+            >
+              {error}
+            </motion.div>
+          ) : dataToRender.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="p-6 text-center text-gray-600"
+            >
+              No transactions found.
+            </motion.div>
+          ) : (
+            <>
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <motion.thead className="bg-gray-100">
+                    <tr>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                        <div className="flex items-center space-x-2">
+                          <span>Transaction ID</span>
                         </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        <motion.div
-                          initial={{ scale: 0.8 }}
-                          animate={{ scale: 1 }}
-                          transition={{ duration: 0.2, delay: index * 0.05 + 0.1 }}
-                          className="flex items-center space-x-2"
+                      </th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                        <div className="flex items-center space-x-2">
+                          <span>Amount</span>
+                        </div>
+                      </th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                        <div className="flex items-center space-x-2">
+                          <span>Wallet</span>
+                        </div>
+                      </th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                        <div className="flex items-center space-x-2">
+                          <span>Status</span>
+                        </div>
+                      </th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider">
+                        <div className="flex items-center space-x-2">
+                          <span>Date & Time</span>
+                        </div>
+                      </th>
+                    </tr>
+                  </motion.thead>
+                  <tbody className="divide-y divide-gray-100">
+                    <AnimatePresence mode="wait">
+                      {dataToRender.map((txn, index) => (
+                        <motion.tr
+                          key={txn.transaction_id}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: 20 }}
+                          transition={{ duration: 0.3, delay: index * 0.05 }}
+                          whileHover={{ backgroundColor: "rgba(249, 250, 251, 1)" }}
+                          className="hover:bg-gray-50 transition-colors"
                         >
-                          <span className="text-green-600 font-semibold">₹</span>
-                          <span className="font-semibold text-green-600">{txn.amount.toLocaleString()}</span>
-                        </motion.div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ duration: 0.3, delay: index * 0.05 + 0.2 }}
-                          className="flex items-center space-x-3"
-                        >
-                          <div className="flex-shrink-0">{getAccountIcon(txn.wallet?.name)}</div>
-                          <div>
-                            <div className="font-medium text-gray-800">{txn.wallet?.name}</div>
-                            <div className="text-xs text-gray-500">Digital Wallet</div>
-                          </div>
-                        </motion.div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm">
-                        <motion.span
-                          initial={{ scale: 0.8 }}
-                          animate={{ scale: 1 }}
-                          transition={{ duration: 0.2, delay: index * 0.05 + 0.3 }}
-                          className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
-                            txn.status === 'completed' || txn.status === 'success'
-                              ? 'bg-green-100 text-green-800'
-                              : txn.status === 'pending'
-                              ? 'bg-yellow-100 text-yellow-800'
-                              : txn.status === 'failed' || txn.status === 'error'
-                              ? 'bg-red-100 text-red-800'
-                              : 'bg-gray-100 text-gray-800'
-                          }`}
-                        >
-                          <motion.div
-                            animate={{ scale: [1, 1.2, 1] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                            className={`w-1.5 h-1.5 rounded-full mr-1.5 ${
-                              txn.status === 'completed' || txn.status === 'success'
-                                ? 'bg-green-500'
-                                : txn.status === 'pending'
-                                ? 'bg-yellow-500'
-                                : txn.status === 'failed' || txn.status === 'error'
-                                ? 'bg-red-500'
-                                : 'bg-gray-500'
-                            }`}
-                          />
-                          {txn.status.charAt(0).toUpperCase() + txn.status.slice(1)}
-                        </motion.span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ duration: 0.3, delay: index * 0.05 + 0.4 }}
-                        >
-                          <div className="font-medium text-gray-900">
-                            {new Date(txn.created_date).toLocaleDateString('en-IN', {
-                              day: 'numeric',
-                              month: 'short',
-                              year: 'numeric'
-                            })}
-                          </div>
-                          <div className="text-xs text-gray-500">
-                            {new Date(txn.created_date).toLocaleTimeString('en-IN', {
-                              hour: '2-digit',
-                              minute: '2-digit'
-                            })}
-                          </div>
-                        </motion.div>
-                      </td>
-                    </motion.tr>
-                  ))}
-                </AnimatePresence>
-              </tbody>
-            </table>
-          </div>
-          <DesktopPagination page={page} totalPages={totalPages} setPage={setPage} />
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            <div className="flex items-center space-x-3">
+                              <div className="font-mono text-sm">{txn.transaction_id}</div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            <motion.div
+                              initial={{ scale: 0.8 }}
+                              animate={{ scale: 1 }}
+                              transition={{ duration: 0.2, delay: index * 0.05 + 0.1 }}
+                              className="flex items-center space-x-2"
+                            >
+                              <span className="text-green-600 font-semibold">₹</span>
+                              <span className="font-semibold text-green-600">{txn.amount.toLocaleString()}</span>
+                            </motion.div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            <motion.div
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ duration: 0.3, delay: index * 0.05 + 0.2 }}
+                              className="flex items-center space-x-3"
+                            >
+                              <div className="flex-shrink-0">{getAccountIcon(txn.wallet?.name)}</div>
+                              <div>
+                                <div className="font-medium text-gray-800">{txn.wallet?.name}</div>
+                                <div className="text-xs text-gray-500">Digital Wallet</div>
+                              </div>
+                            </motion.div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm">
+                            <motion.span
+                              initial={{ scale: 0.8 }}
+                              animate={{ scale: 1 }}
+                              transition={{ duration: 0.2, delay: index * 0.05 + 0.3 }}
+                              className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
+                                txn.status === 'completed' || txn.status === 'success'
+                                  ? 'bg-green-100 text-green-800'
+                                  : txn.status === 'pending'
+                                  ? 'bg-yellow-100 text-yellow-800'
+                                  : txn.status === 'failed' || txn.status === 'error'
+                                  ? 'bg-red-100 text-red-800'
+                                  : 'bg-gray-100 text-gray-800'
+                              }`}
+                            >
+                              <motion.div
+                                animate={{ scale: [1, 1.2, 1] }}
+                                transition={{ duration: 2, repeat: Infinity }}
+                                className={`w-1.5 h-1.5 rounded-full mr-1.5 ${
+                                  txn.status === 'completed' || txn.status === 'success'
+                                    ? 'bg-green-500'
+                                    : txn.status === 'pending'
+                                    ? 'bg-yellow-500'
+                                    : txn.status === 'failed' || txn.status === 'error'
+                                    ? 'bg-red-500'
+                                    : 'bg-gray-500'
+                                }`}
+                              />
+                              {txn.status.charAt(0).toUpperCase() + txn.status.slice(1)}
+                            </motion.span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            <motion.div
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ duration: 0.3, delay: index * 0.05 + 0.4 }}
+                            >
+                              <div className="font-medium text-gray-900">
+                                {new Date(txn.created_date).toLocaleDateString('en-IN', {
+                                  day: 'numeric',
+                                  month: 'short',
+                                  year: 'numeric'
+                                })}
+                              </div>
+                              <div className="text-xs text-gray-500">
+                                {new Date(txn.created_date).toLocaleTimeString('en-IN', {
+                                  hour: '2-digit',
+                                  minute: '2-digit'
+                                })}
+                              </div>
+                            </motion.div>
+                          </td>
+                        </motion.tr>
+                      ))}
+                    </AnimatePresence>
+                  </tbody>
+                </table>
+              </div>
+              <DesktopPagination page={page} totalPages={totalPages} setPage={setPage} />
+            </>
+          )}
         </motion.div>
-        
+
         {/* Settlement Modal */}
         <SettlementModal
           isOpen={isModalOpen}

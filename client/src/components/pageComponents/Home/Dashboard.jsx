@@ -197,7 +197,7 @@ const Dashboard = () => {
             </div>
           </div>
           <motion.button
-            className="w-full bg-gray-800 text-white px-4 py-3 rounded-lg hover:bg-gray-900 transition-colors font-medium mt-auto"
+            className="w-full bg-green-600 text-white px-4 py-3 rounded-lg hover:bg-[#42794A] hover:border-[#42794A] transition-colors font-medium"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >

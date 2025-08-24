@@ -165,18 +165,17 @@ function SideNavBar() {
                 }`}>
                   {item.submenus.map((sub, idx) => (
                     <NavLink
-                      key={idx}
-                      to={sub.to}
-                      onClick={closeMobileMenu}
+                      to={item.to}
+                      onClick={() => handleMenuClick(item)}
                       className={({ isActive }) =>
                         `block text-sm px-3 py-2 rounded-lg cursor-pointer transition-colors ${
                           isActive
                             ? isMobile
-                              ? "bg-green-100 text-green-800"
-                              : "bg-[#4A8B5C] text-white"
+                              ? "hover:bg-gray-100 text-gray-800 hover:text-gray-800"
+                              : "hover:bg-gray-100 text-gray-800 hover:text-gray-800"
                             : isMobile
-                              ? "text-gray-600 hover:bg-gray-100 hover:text-gray-600"
-                              : "text-[#42794A] hover:text-[#42794A] hover:bg-[#f2f2f2]"
+                              ? "text-gray-600 hover:bg-gray-100 hover:text-gray-800"
+                              : "text-gray-600 hover:bg-gray-100 hover:text-gray-800"
                         }`
                       }
                     >

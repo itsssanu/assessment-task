@@ -485,10 +485,7 @@ const History = () => {
             onClick={() => setIsModalOpen(true)}
             className="flex rounded-md font-medium items-center gap-2 px-4 py-2 border text-white bg-green-600 hover:border-[#42794A] hover:bg-green-700 flex-shrink-0"
           >
-            <motion.div
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
+            <motion.div>
               <BsStopwatch size={20} />
             </motion.div>
             Settle Now!

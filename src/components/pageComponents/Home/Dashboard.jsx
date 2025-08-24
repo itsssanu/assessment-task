@@ -56,48 +56,51 @@ const Dashboard = () => {
       animate="visible"
     >
       {/* Banner */}
-      <motion.section
-        className="rounded-2xl border-2 border-[#42794A] shadow-sm overflow-hidden relative bg-white"
-        variants={bannerVariants}
-      >
-        <div className="flex flex-col md:flex-row relative">
-          {/* Left side - Green section with diagonal cut */}
-          <div className="flex-1 relative">
-            <div
-              className="h-full p-8 flex flex-col justify-center text-white relative"
-              style={{
-                background: "linear-gradient(135deg, #42794A 20%, #50c360ff 100%)",
-                clipPath: "polygon(0 0, 100% 0, 85% 100%, 0 100%)",
-              }}
-            >
-              <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-3">
-                Pay ₹1/month* for the QPay<br />
-                POS Device
-              </h2>
-              <p className="text-white/90 text-base mb-6">
-                One device for accepting all modes of payments
-              </p>
-              <motion.button
-                className="bg-white text-green-700 text-sm font-medium px-6 py-3 rounded-md hover:bg-gray-50 transition-colors self-start"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Download App Now!
-              </motion.button>
-            </div>
-          </div>
-          {/* Right side - Light background with image */}
-          <div className="flex-1 bg-white flex items-center justify-center relative">
-            <div className="max-h-48 flex items-center justify-center">
-              <img
-                src={HomeImage}
-                alt="QPay POS Device"
-                className="max-h-58 object-contain"
-              />
-            </div>
-          </div>
-        </div>
-      </motion.section>
+     <motion.section
+       className="rounded-2xl border-2 border-[#42794A] shadow-sm overflow-hidden relative bg-white"
+       variants={bannerVariants}
+     >
+       <div className="flex flex-col lg:flex-row relative">
+         {/* Left side - Green section with diagonal cut (desktop only) */}
+         <div className="flex-1 relative">
+           <div
+             className={`
+               h-full p-8 flex flex-col justify-center text-white relative
+               ${window.innerWidth >= 1024 ? '[clip-path:polygon(0_0,100%_0,85%_100%,0_100%)]' : ''}
+             `}
+             style={{
+               background: "linear-gradient(135deg, #42794A 20%, #50c360ff 100%)",
+             }}
+           >
+             <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-3">
+               Pay ₹1/month* for the QPay<br />
+               POS Device
+             </h2>
+             <p className="text-white/90 text-base mb-6">
+               One device for accepting all modes of payments
+             </p>
+             <motion.button
+               className="bg-white text-green-700 text-sm font-medium px-6 py-3 rounded-md hover:bg-gray-50 transition-colors self-start"
+               whileHover={{ scale: 1.05 }}
+               whileTap={{ scale: 0.95 }}
+             >
+               Download App Now!
+             </motion.button>
+           </div>
+         </div>
+     
+         {/* Right side - Light background with image (desktop only) */}
+         <div className="flex-1 bg-white flex items-center justify-center relative hidden lg:flex">
+           <div className="max-h-48 flex items-center justify-center">
+             <img
+               src={HomeImage}
+               alt="QPay POS Device"
+               className="max-h-58 object-contain"
+             />
+           </div>
+         </div>
+       </div>
+     </motion.section>
 
       {/* KPIs Section */}
       <motion.section

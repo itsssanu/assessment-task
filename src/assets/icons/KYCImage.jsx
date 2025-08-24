@@ -6,8 +6,8 @@ export const KYCIcon = ({ fill = '#000', className, onClick, style = {} }) => {
     <svg
       className={classNames('text-black', className ? className : '')}
       onClick={onClick ? onClick : () => null}
-      width="45"
-      height="44"
+      width="29"
+      height="28"
       viewBox="0 0 45 44"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"

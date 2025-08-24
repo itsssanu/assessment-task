@@ -86,7 +86,7 @@ function SideNavBar() {
   const MobileMenuButton = () => (
     <button
       onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-      className="mobile-menu-button md:hidden fixed top-4 left-4 z-50 p-2 bg-white text-gray-700 rounded-md shadow-sm hover:bg-gray-50 transition-all duration-200 border border-gray-200"
+      className="mobile-menu-button md:hidden fixed top-4 left-4 z-50 p-2 bg-white text-gray-700 rounded-md shadow-sm hover:bg-gray-50 hover:border-gray-200 transition-all duration-200 border border-gray-200"
       aria-label="Toggle menu"
     >
       {isMobileMenuOpen ? (
@@ -110,7 +110,7 @@ function SideNavBar() {
           />
           <button
             onClick={closeMobileMenu}
-            className="text-gray-500 hover:text-gray-700 bg-white focus:outline-none border border-transparent rounded-lg"
+            className="bg-white text-gray-700 rounded-md shadow-sm hover:bg-gray-50 hover:border-gray-200 transition-all duration-200 border border-gray-200"
           >
             <X size={20} />
           </button>

@@ -88,7 +88,7 @@ const SettlementModal = ({ isOpen, onClose, settlementData }) => {
             </p>
             
             {/* Settle Now Button inside the card */}
-            <button className="flex items-center gap-2 px-4 py-2 border text-white text-sm bg-green-600 hover:border-[#42794A] hover:bg-green-700 flex-shrink-0">
+            <button className="flex items-center gap-2 px-4 py-2 rounded-md font-medium border text-white text-sm bg-green-600 hover:border-[#42794A] hover:bg-green-700 flex-shrink-0">
               <BsStopwatch size={14} />
               Settle Now
             </button>

@@ -134,7 +134,7 @@ function SideNavBar() {
                   `flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 group
                   ${isActive
                     ? isMobile 
-                      ? "bg-green-50 text-green-700 shadow-sm border border-green-200 hover:green-700"
+                      ? "bg-green-50 text-green-700 shadow-sm border border-green-200 hover:text-green-700"
                       : "bg-white text-[#42794A] shadow-sm hover:text-[#42794A]"
                     : isMobile
                       ? "hover:bg-gray-50 text-gray-700 hover:text-gray-900"

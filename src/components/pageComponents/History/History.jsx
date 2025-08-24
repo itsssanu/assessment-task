@@ -317,11 +317,11 @@ const History = () => {
   const dataToRender = filteredData.length > 0 ? filteredData : transactions;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
+    <div className="min-h-screen bg-gray-50 p-2">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-semibold text-gray-900">Settlement History</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Settlement History</h1>
           <button className="flex items-center gap-2 px-4 py-2 border border-[#42794A] rounded-lg text-[#42794A] hover:text-white hover:bg-[#42794A] bg-gray-50 hover:border-[#42794A]">
             <Download size={16} /> Download statement
           </button>
@@ -346,7 +346,7 @@ const History = () => {
         {/* Auto-settle Banner */}
         <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Clock className="text-green-600" size={20} />
+            <Clock className="text-green-600 hidden lg:flex " size={20} />
             <span className="text-sm text-gray-700">
               Today's total collection will be auto-settled by <strong>08:00AM, Tomorrow</strong>.
             </span>

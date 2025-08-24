@@ -125,10 +125,9 @@ const Profile = () => {
             <div
               className={`
                 h-full p-8 flex flex-col justify-center text-white relative
-                ${
-                  window.innerWidth >= 1024
-                    ? "[clip-path:polygon(0_0,100%_0,85%_100%,0_100%)]"
-                    : ""
+                ${window.innerWidth >= 1024
+                  ? "[clipPath:polygon(0_0,100%_0,85%_100%,0_100%)]"
+                  : ""
                 }
               `}
               style={{
@@ -164,94 +163,94 @@ const Profile = () => {
         </div>
       </motion.section>
 
-{/* Profile Cards */}
-<motion.div
-  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"
-  variants={containerVariants}
->
-  {profileCards.map((card) => (
-    <motion.div
-      key={card.id}
-      className="bg-green-50 rounded-2xl p-5 flex flex-col justify-between cursor-pointer 
+      {/* Profile Cards */}
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"
+        variants={containerVariants}
+      >
+        {profileCards.map((card) => (
+          <motion.div
+            key={card.id}
+            className="bg-green-50 rounded-2xl p-5 flex flex-col justify-between cursor-pointer 
                  hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-      variants={cardVariants}
-    >
-      <div className="flex items-center justify-between">
-        <div className="w-12 h-12 flex items-center justify-center bg-[#42794A] text-white rounded-full">
-          {card.icon}
-        </div>
-        <ChevronRight className="text-[#42794A] w-5 h-5" />
-      </div>
-      <div className="mt-4">
-        <h3 className="font-semibold text-[#2E5C35] text-lg">
-          {card.title}
-        </h3>
-        <p className="text-sm font-medium text-gray-500 mt-1">{card.subtitle}</p>
-      </div>
-    </motion.div>
-  ))}
-</motion.div>
+            variants={cardVariants}
+          >
+            <div className="flex items-center justify-between">
+              <div className="w-12 h-12 flex items-center justify-center bg-[#42794A] text-white rounded-full">
+                {card.icon}
+              </div>
+              <ChevronRight className="text-[#42794A] w-5 h-5" />
+            </div>
+            <div className="mt-4">
+              <h3 className="font-semibold text-[#2E5C35] text-lg">
+                {card.title}
+              </h3>
+              <p className="text-sm font-medium text-gray-500 mt-1">{card.subtitle}</p>
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
 
 
-{/* Business Services & Manage Business */}
-<motion.div
-  className="grid grid-cols-1 md:grid-cols-2 gap-6"
-  variants={containerVariants}
->
-  {/* Business Services */}
-  <motion.div
-    variants={cardVariants}
-    className="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center border border-gray-100"
-  >
-    <h3 className="font-semibold mb-6 text-gray-600 text-sm uppercase tracking-wide text-center">
-      Business Services
-    </h3>
-
-    <div className="grid grid-cols-2 gap-8 w-full max-w-md">
-      {businessServices.map((service) => (
+      {/* Business Services & Manage Business */}
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        variants={containerVariants}
+      >
+        {/* Business Services */}
         <motion.div
-          key={service.id}
-          className="flex flex-col items-center justify-center hover:-translate-y-1 transition-transform duration-300"
           variants={cardVariants}
+          className="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center border border-gray-100"
         >
-          <div className="p-4 bg-green-50 rounded-xl flex items-center justify-center w-20 h-20">
-            {service.icon}
+          <h3 className="font-semibold mb-6 text-gray-600 text-sm uppercase tracking-wide text-center">
+            Business Services
+          </h3>
+
+          <div className="grid grid-cols-2 gap-8 w-full max-w-md">
+            {businessServices.map((service) => (
+              <motion.div
+                key={service.id}
+                className="flex flex-col items-center justify-center hover:-translate-y-1 transition-transform duration-300"
+                variants={cardVariants}
+              >
+                <div className="p-4 bg-green-50 rounded-xl flex items-center justify-center w-20 h-20">
+                  {service.icon}
+                </div>
+                <h4 className="text-sm font-medium text-gray-800 text-center mt-3">
+                  {service.title}
+                </h4>
+              </motion.div>
+            ))}
           </div>
-          <h4 className="text-sm font-medium text-gray-800 text-center mt-3">
-            {service.title}
-          </h4>
         </motion.div>
-      ))}
-    </div>
-  </motion.div>
 
-  {/* Manage Business */}
-  <motion.div
-    variants={cardVariants}
-    className="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center border border-gray-100"
-  >
-    <h3 className="font-semibold mb-6 text-gray-600 text-sm uppercase tracking-wide text-center">
-      Manage Business
-    </h3>
-
-    <div className="grid grid-cols-3 gap-6">
-      {manageBusiness.map((item) => (
+        {/* Manage Business */}
         <motion.div
-          key={item.id}
-          className="flex flex-col items-center justify-center hover:-translate-y-1 transition-transform duration-300"
           variants={cardVariants}
+          className="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center border border-gray-100"
         >
-          <div className="p-4 bg-green-50 rounded-xl flex items-center justify-center w-16 h-16">
-            {item.icon}
+          <h3 className="font-semibold mb-6 text-gray-600 text-sm uppercase tracking-wide text-center">
+            Manage Business
+          </h3>
+
+          <div className="grid grid-cols-3 gap-6">
+            {manageBusiness.map((item) => (
+              <motion.div
+                key={item.id}
+                className="flex flex-col items-center justify-center hover:-translate-y-1 transition-transform duration-300"
+                variants={cardVariants}
+              >
+                <div className="p-4 bg-green-50 rounded-xl flex items-center justify-center w-16 h-16">
+                  {item.icon}
+                </div>
+                <h4 className="text-sm font-medium text-gray-800 text-center mt-3">
+                  {item.title}
+                </h4>
+              </motion.div>
+            ))}
           </div>
-          <h4 className="text-sm font-medium text-gray-800 text-center mt-3">
-            {item.title}
-          </h4>
         </motion.div>
-      ))}
-    </div>
-  </motion.div>
-</motion.div>
+      </motion.div>
 
     </motion.div>
   );

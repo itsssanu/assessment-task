@@ -2,21 +2,25 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import Bharatconnectlogo from "../../assets/icons/images/Bharatconnectlogo.png";
+import { HomeIcon } from "../../assets/icons/HomeIcon";
+import { HistoryMenuIcon } from "../../assets/icons/HistoryMenuIcon";
+import { QRIcon } from "../../assets/icons/QRIcon";
+import { ProfileIcon } from "../../assets/icons/ProfileIcon";
 
 const menuItems = [
-  { to: "/", label: "Home", icon: "🏠" },
-  { to: "/qr", label: "QR", icon: "🔳" },
+  { to: "/", label: "Home", icon: HomeIcon },
+  { to: "/qr", label: "QR", icon: QRIcon },
   {
     to: "/history",
     label: "History",
-    icon: "🕘",
+    icon: HistoryMenuIcon,
     hasDropdown: true,
     submenus: [
       { label: "Transaction History", to: "/history/transactions" },
       { label: "Settlement History", to: "/history/settlements" }
     ]
   },
-  { to: "/profile", label: "Profile", icon: "👤" },
+  { to: "/profile", label: "Profile", icon: ProfileIcon },
 ];
 
 function SideNavBar() {
@@ -118,69 +122,72 @@ function SideNavBar() {
       )}
 
       <nav className="flex-1 px-4 pt-6 pb-4 space-y-1">
-        {menuItems.map((item) => (
-          <div key={item.to}>
-            <NavLink
-              to={item.to}
-              end={item.to === "/"}
-              onClick={() => handleMenuClick(item)}
-              className={({ isActive }) =>
-                `flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 group
-                ${isActive
-                  ? isMobile 
-                    ? "bg-green-50 text-green-700 shadow-sm border border-green-200"
-                    : "bg-white text-[#2D5A3D] shadow-sm"
-                  : isMobile
-                    ? "hover:bg-gray-50 text-gray-700 hover:text-gray-900"
-                    : "hover:bg-white/10 text-white/90 hover:text-white"
-                }`
-              }
-            >
-              <div className="flex items-center gap-3">
-                <span className="text-lg">{item.icon}</span>
-                <span>{item.label}</span>
-              </div>
-              {item.hasDropdown && (
-                <svg
-                  className={`w-4 h-4 transition-transform duration-200 ${openDropdown === item.label ? "rotate-180" : ""}`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              )}
-            </NavLink>
-            {item.hasDropdown && openDropdown === item.label && (
-              <div className={`ml-10 mt-2 space-y-1 rounded-lg p-2 shadow-sm ${
-                isMobile 
-                  ? "bg-gray-50 border border-gray-200" 
-                  : "bg-white"
-              }`}>
-                {item.submenus.map((sub, idx) => (
-                  <NavLink
-                    key={idx}
-                    to={sub.to}
-                    onClick={closeMobileMenu}
-                    className={({ isActive }) =>
-                      `block text-sm px-3 py-2 rounded-lg cursor-pointer transition-colors ${
-                        isActive
-                          ? isMobile
-                            ? "bg-green-100 text-green-800"
-                            : "bg-[#4A8B5C] text-white"
-                          : isMobile
-                            ? "text-gray-600 hover:bg-gray-100"
-                            : "text-[#2D5A3D] hover:bg-[#f2f2f2]"
-                      }`
-                    }
+        {menuItems.map((item) => {
+          const IconComponent = item.icon;
+          return (
+            <div key={item.to}>
+              <NavLink
+                to={item.to}
+                end={item.to === "/"}
+                onClick={() => handleMenuClick(item)}
+                className={({ isActive }) =>
+                  `flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 group
+                  ${isActive
+                    ? isMobile 
+                      ? "bg-green-50 text-green-700 shadow-sm border border-green-200 hover:green-700"
+                      : "bg-white text-[#42794A] shadow-sm hover:text-[#42794A]"
+                    : isMobile
+                      ? "hover:bg-gray-50 text-gray-700 hover:text-gray-900"
+                      : "hover:bg-white/10 text-white/90 hover:text-white"
+                  }`
+                }
+              >
+                <div className="flex items-center gap-3">
+                  <IconComponent className="w-5 h-5" />
+                  <span>{item.label}</span>
+                </div>
+                {item.hasDropdown && (
+                  <svg
+                    className={`w-4 h-4 transition-transform duration-200 ${openDropdown === item.label ? "rotate-180" : ""}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                    {sub.label}
-                  </NavLink>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                )}
+              </NavLink>
+              {item.hasDropdown && openDropdown === item.label && (
+                <div className={`ml-10 mt-2 space-y-1 rounded-lg p-2 shadow-sm ${
+                  isMobile 
+                    ? "bg-gray-50 border border-gray-200" 
+                    : "bg-white"
+                }`}>
+                  {item.submenus.map((sub, idx) => (
+                    <NavLink
+                      key={idx}
+                      to={sub.to}
+                      onClick={closeMobileMenu}
+                      className={({ isActive }) =>
+                        `block text-sm px-3 py-2 rounded-lg cursor-pointer transition-colors ${
+                          isActive
+                            ? isMobile
+                              ? "bg-green-100 text-green-800"
+                              : "bg-[#4A8B5C] text-white"
+                            : isMobile
+                              ? "text-gray-600 hover:bg-gray-100 hover:text-gray-600"
+                              : "text-[#42794A] hover:text-[#42794A] hover:bg-[#f2f2f2]"
+                        }`
+                      }
+                    >
+                      {sub.label}
+                    </NavLink>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </nav>
 
       {/* Footer Logo */}

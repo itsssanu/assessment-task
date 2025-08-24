@@ -14,7 +14,7 @@ export const GooglepayIcon = ({ fill = '#000', className, onClick, style = {} })
             fill="none"
             style={style}
         >
-            <g clip-path="url(#clip0_2_1442)">
+            <g clipPath="url(#clip0_2_1442)">
                 <mask id="mask0_2_1442" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="9" y="1" width="9" height="11">
                     <mask id="mask1_2_1442" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="9" y="1" width="9" height="11">
                         <path d="M9.50479 8.43208L13.562 1.40405L15.7721 2.67993C17.1988 3.50339 17.6886 5.32912 16.8638 6.75582L14.579 10.7129C14.0638 11.6044 12.924 11.9101 12.0312 11.3962L9.97991 10.2124C9.35798 9.85076 9.14445 9.054 9.50479 8.43208Z" fill="white" />

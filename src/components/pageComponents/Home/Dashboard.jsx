@@ -90,7 +90,7 @@ const Dashboard = () => {
          </div>
      
          {/* Right side - Light background with image (desktop only) */}
-         <div className="flex-1 bg-white flex items-center justify-center relative hidden lg:flex">
+         <div className="flex-1 bg-white items-center justify-center relative hidden lg:flex">
            <div className="max-h-48 flex items-center justify-center">
              <img
                src={HomeImage}

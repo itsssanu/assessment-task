@@ -13,7 +13,7 @@ A React-based web application with Node.js backend proxy to integrate with Visa 
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd ASSESSMENT_TASK
+   cd assessment-task
    ```
 
 2. **Install dependencies**

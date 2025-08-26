@@ -290,8 +290,6 @@ const DesktopPagination = ({ page, totalPages, setPage }) => {
 
 const History = () => {
   const [transactions, setTransactions] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
   const [dataLoading, setDataLoading] = useState(true);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(0);
@@ -328,28 +326,6 @@ const History = () => {
     fetchTransactions();
   }, [page]);
 
-  const handleSearch = (value) => {
-    setSearchTerm(value);
-    if (value) {
-      const filtered = transactions.filter(item =>
-        item?.name?.toLowerCase().includes(value.toLowerCase()) ||
-        item?.account?.toLowerCase().includes(value.toLowerCase()) ||
-        item?.status?.toLowerCase().includes(value.toLowerCase()) ||
-        item?.amount?.toString().includes(value)
-      );
-      setFilteredData(filtered);
-    } else {
-      setFilteredData(transactions);
-    }
-  };
-
-  const handleClearSearch = () => {
-    setSearchTerm('');
-    setFilteredData(transactions);
-  };
-
-  const dataToRender = filteredData.length > 0 ? filteredData : transactions;
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -379,7 +355,6 @@ const History = () => {
             <Download size={16} /> Download statement
           </motion.button>
         </motion.div>
-
         {/* Search and Filter */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -390,10 +365,6 @@ const History = () => {
           <div className="flex-1 w-full">
             <SearchFilter
               placeholder="Search"
-              value={searchTerm}
-              onNameSelect={handleSearch}
-              onClearSearch={handleClearSearch}
-              onChange={(value) => !value && handleClearSearch()}
               rounded="lg"
               additionalClassName="!h-10 !w-full !ring-1 !ring-gray-300 focus-within:!ring-2 focus-within:!ring-green-500"
             />
@@ -404,7 +375,6 @@ const History = () => {
             <Filter size={18} />
           </motion.button>
         </motion.div>
-
         {/* Auto-settle Banner */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -435,7 +405,6 @@ const History = () => {
             Settle Now!
           </motion.button>
         </motion.div>
-
         {/* Mobile Cards (hidden on desktop) */}
         <div className="sm:hidden">
           {dataLoading ? (
@@ -459,7 +428,7 @@ const History = () => {
             >
               {error}
             </motion.div>
-          ) : dataToRender.length === 0 ? (
+          ) : transactions.length === 0 ? (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -470,7 +439,7 @@ const History = () => {
           ) : (
             <>
               <AnimatePresence mode="wait">
-                {dataToRender.map((txn, index) => (
+                {transactions.map((txn, index) => (
                   <TransactionCard key={txn.transaction_id} txn={txn} index={index} />
                 ))}
               </AnimatePresence>
@@ -478,7 +447,6 @@ const History = () => {
             </>
           )}
         </div>
-
         {/* Desktop Table (hidden on mobile) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -507,7 +475,7 @@ const History = () => {
             >
               {error}
             </motion.div>
-          ) : dataToRender.length === 0 ? (
+          ) : transactions.length === 0 ? (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -550,7 +518,7 @@ const History = () => {
                   </motion.thead>
                   <tbody className="divide-y divide-gray-100">
                     <AnimatePresence mode="wait">
-                      {dataToRender.map((txn, index) => (
+                      {transactions.map((txn, index) => (
                         <motion.tr
                           key={txn.transaction_id}
                           initial={{ opacity: 0, x: -20 }}
@@ -652,7 +620,6 @@ const History = () => {
             </>
           )}
         </motion.div>
-
         {/* Settlement Modal */}
         <SettlementModal
           isOpen={isModalOpen}
